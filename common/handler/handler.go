@@ -16,7 +16,7 @@ func SendResponse(w http.ResponseWriter, status int, data []byte) {
 // Common function wich will be used to send errors for incorrect http requests
 func SendError(w http.ResponseWriter, status int) {
 
-	data := []byte{}
+	data := []byte(`{}`)
 
 	w.Header().Set("Content-Type", "application/")
 	w.WriteHeader(status)
