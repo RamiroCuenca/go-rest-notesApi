@@ -21,7 +21,7 @@ docker-postgres-createdb:
 
 # This rule deletes the db on the container
 docker-postgres-dropdb:
-	docker exec -it notesApp dropdb bank_app
+	docker exec -it notesApp dropdb notes-app-db
 
 # This rule runs the migrations up
 run-migrations-up:
