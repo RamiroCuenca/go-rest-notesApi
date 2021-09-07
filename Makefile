@@ -31,4 +31,4 @@ run-migrations-down:
 	migrate --path db/migration --database "postgresql://postgres:postgres@localhost:5432/notes-app-db?sslmode=disable" --verbose down
 
 # .PHONY tell explicitly to MAKE that those rules are not associated with files
-.PHONY: postgres createdb dropb run-migrations-up run-migrations-down
+.PHONY: docker-container-create docker-container-start docker-container-stop docker-postgres-createdb docker-postgres-dropdb run-migrations-up run-migrations-down
