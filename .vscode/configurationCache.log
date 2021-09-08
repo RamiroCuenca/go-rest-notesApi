@@ -1,0 +1,1 @@
+{"buildTargets":["docker-container-create","docker-container-start","docker-container-stop","docker-postgres-createdb","docker-postgres-dropdb","run-migrations-down","run-migrations-up"],"launchTargets":[],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}
