@@ -3,6 +3,7 @@ module github.com/RamiroCuenca/go-rest-notesApi
 go 1.17
 
 require (
+	github.com/go-chi/chi v1.5.4
 	github.com/lib/pq v1.10.3
 	go.uber.org/zap v1.19.0
 )
