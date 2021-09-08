@@ -11,4 +11,14 @@ func main() {
 
 	// Init postgres database
 	connection.NewPostgresClient()
+
+	// Get routes
+	mux := Routes()
+
+	// Init server
+	sv := NewServer(mux)
+
+	// Run server
+	logger.Log().Info("Server running over port :8000 ...")
+	sv.Run()
 }
