@@ -53,6 +53,7 @@ func NewPostgresClient() *PostgreClient {
 
 	if err != nil {
 		logger.Log().Errorf("Error with the connection with the database. Reason: %v", err)
+		panic(err)
 	}
 
 	// fmt.Printf("\nConnected to %s succesfully!\n", dbname)
