@@ -2,103 +2,133 @@ package controllers
 
 import (
 	"database/sql"
+	"encoding/json"
+	"net/http"
 
+	"github.com/RamiroCuenca/go-rest-notesApi/common/handler"
 	"github.com/RamiroCuenca/go-rest-notesApi/common/logger"
 	"github.com/RamiroCuenca/go-rest-notesApi/database/connection"
 	"github.com/RamiroCuenca/go-rest-notesApi/notes/models"
 )
 
-type Database struct {
-	*connection.PostgreClient
-}
+// type Storage interface {
+// 	Create(*models.Note) error
+// 	Update(*models.Note) error
+// 	GetAll() ([]models.Note, error)
+// 	GetById(id int) (models.Note, error)
+// 	Delete(id int) error
+// }
 
-func (db *Database) NotesCreate(note *models.Note) (err error) {
-	// 1° Prepare the query that will be executed
-	q := `INSERT INTO notes (owner_name, title, datails)
-	VALUES ($1, $2, $3) RETURNING id`
-
-	// Be prepared if details are empty
-	stringNull := sql.NullString{}
-
-	if note.Details == "" {
-		stringNull.Valid = false
-	} else {
-		stringNull.String = note.Details
+func NotesCreate(w http.ResponseWriter, r *http.Request) {
+	// 1° Decode the json received on a Note object
+	n := models.Note{}
+	err := json.NewDecoder(r.Body).Decode(&n)
+	if err != nil {
+		logger.Log().Infof("Error decoding request: %v", err)
+		handler.SendError(w, http.StatusBadRequest)
+		return
 	}
+
+	// 2° Create the sql statement and prepare null fields
+	q := `INSERT INTO notes (owner_name, title, details)
+	 	VALUES ($1, $2, $3) RETURNING id`
+
+	detailsNull := sql.NullString{}
+
+	logger.Log().Infof("detailsNull value: %v", detailsNull.String)
+	logger.Log().Infof("detailsNull valid: %v", detailsNull.Valid)
+
+	if n.Details == "" {
+		detailsNull.Valid = false
+	} else {
+		detailsNull.String = n.Details
+	}
+
+	logger.Log().Infof("detailsNull value: %v", detailsNull.String)
+	logger.Log().Infof("detailsNull valid: %v", detailsNull.Valid)
 
 	// A time ago... i used to open the database here, but at least on this
 	// particular project we open it on the main file so it is not necessary
 	// to be opened here
 
-	// 2° Open a transaction
-	// db.PostgreClient.DB.Begin() // Have it in case it fails the tx
+	// 3° Start a transaction
+	db := connection.NewPostgresClient()
 	tx, err := db.Begin()
 	if err != nil {
-		logger.Log().Infof("There was an error beggining the tx. Error: %v", err)
+		logger.Log().Infof("Error starting transaction: %v", err)
+		handler.SendError(w, 500) // Internal Server Error
 		return
 	}
 
-	// 3° Prepare the query
+	// 4° Prepare the transaction
 	stmt, err := tx.Prepare(q)
 	if err != nil {
-		logger.Log().Infof("There was an error preparing the sql statement. Error: %v", err)
+		logger.Log().Infof("Error preparing transaction: %v", err)
 		tx.Rollback()
+		handler.SendError(w, 500) // Internal Server Error
 		return
 	}
 	defer stmt.Close()
 
-	// 4° Execute the query. Send the parameters
-	// We scan it and assign the returned id to the object
-	// StringNull == note.details
-	err = stmt.QueryRow(note.OwnerName, note.Title, stringNull).Scan(&note.ID)
+	// 5° Execute the query and assign the returned id to the Note object
+	// We will use QueryRow because the exec method returns two methods that are
+	// not compatible with psql!
+	err = stmt.QueryRow(n.OwnerName, n.Title, detailsNull.String).Scan(&n.ID)
 	if err != nil {
-		logger.Log().Infof("There was an error executing the sql statement. Error: %v", err)
+		logger.Log().Infof("Error executing query: %v", err)
 		tx.Rollback()
+		handler.SendError(w, 500) // Internal Server Error
 		return
 	}
 
+	// 6° As there are no errors, commit the transaction
 	tx.Commit()
-	logger.Log().Info("Note created successfully :)")
+	logger.Log().Infof("Note created successfully! :)")
 
-	return nil
+	// 7° Encode the Note into a JSON object
+	json, _ := json.Marshal(n)
+
+	// 8° Send the response
+	handler.SendResponse(w, http.StatusCreated, json)
+
 }
 
-func (db *Database) NotesGetAll() ([]models.Note, error) {
-	// 1° Prepare the query that will be executed
-	q := `SELECT id, owner_name, title, details
-		created_at, updated_at FROM notes`
+// func (db *Database) NotesGetAll() ([]models.Note, error) {
+// 	// 1° Prepare the query that will be executed
+// 	q := `SELECT id, owner_name, title, details
+// 		created_at, updated_at FROM notes`
 
-	// Be prepared if details or updated at are empty
-	// stringNull := sql.NullString{}
+// 	// Be prepared if details or updated at are empty
+// 	// detailsNull := sql.NullString{}
 
-	// 2° Open a transaction
-	tx, err := db.Begin()
-	if err != nil {
-		logger.Log().Infof("There was an error beggining the tx. Error: %v", err)
-		return nil, err
-	}
+// 	// 2° Open a transaction
+// 	tx, err := db.Begin()
+// 	if err != nil {
+// 		logger.Log().Infof("There was an error beggining the tx. Error: %v", err)
+// 		return nil, err
+// 	}
 
-	// 3° Prepare the query
-	stmt, err := tx.Prepare(q)
-	if err != nil {
-		logger.Log().Infof("There was an error preparing the sql statement. Error: %v", err)
-		tx.Rollback()
-		return nil, err
-	}
-	defer stmt.Close()
+// 	// 3° Prepare the query
+// 	stmt, err := tx.Prepare(q)
+// 	if err != nil {
+// 		logger.Log().Infof("There was an error preparing the sql statement. Error: %v", err)
+// 		tx.Rollback()
+// 		return nil, err
+// 	}
+// 	defer stmt.Close()
 
-	// 4° Execute the query. Send the parameters
-	// We scan it and assign the returned id to the object
-	// StringNull == note.details
-	// err = stmt.QueryRow(note.OwnerName, note.Title, stringNull).Scan(&note.ID)
-	if err != nil {
-		logger.Log().Infof("There was an error executing the sql statement. Error: %v", err)
-		tx.Rollback()
-		return nil, err
-	}
+// 	// 4° Execute the query. Send the parameters
+// 	// We scan it and assign the returned id to the object
+// 	// StringNull == note.details
+// 	// err = stmt.QueryRow(note.OwnerName, note.Title, stringNull).Scan(&note.ID)
+// 	if err != nil {
+// 		logger.Log().Infof("There was an error executing the sql statement. Error: %v", err)
+// 		tx.Rollback()
+// 		return nil, err
+// 	}
 
-	tx.Commit()
-	logger.Log().Info("Note created successfully :)")
+// 	tx.Commit()
+// 	logger.Log().Info("Note created successfully :)")
 
-	return nil, nil
-}
+// 	return nil, nil
+// }
