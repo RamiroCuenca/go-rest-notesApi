@@ -8,6 +8,7 @@ import (
 func SendResponse(w http.ResponseWriter, status int, data []byte) {
 
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Author", "Ramiro Cuenca Salinas")
 	w.WriteHeader(status)
 	w.Write(data)
 
@@ -19,6 +20,7 @@ func SendError(w http.ResponseWriter, status int) {
 	data := []byte(`{}`)
 
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Author", "Ramiro Cuenca Salinas")
 	w.WriteHeader(status)
 	w.Write(data)
 }
