@@ -18,7 +18,7 @@ func SendError(w http.ResponseWriter, status int) {
 
 	data := []byte(`{}`)
 
-	w.Header().Set("Content-Type", "application/")
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
 	w.Write(data)
 }
