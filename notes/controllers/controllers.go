@@ -11,14 +11,7 @@ import (
 	"github.com/RamiroCuenca/go-rest-notesApi/notes/models"
 )
 
-// type Storage interface {
-// 	Create(*models.Note) error
-// 	Update(*models.Note) error
-// 	GetAll() ([]models.Note, error)
-// 	GetById(id int) (models.Note, error)
-// 	Delete(id int) error
-// }
-
+// This handler creates a new note
 func NotesCreate(w http.ResponseWriter, r *http.Request) {
 	// 1° Decode the json received on a Note object
 	n := models.Note{}
@@ -32,20 +25,6 @@ func NotesCreate(w http.ResponseWriter, r *http.Request) {
 	// 2° Create the sql statement and prepare null fields
 	q := `INSERT INTO notes (owner_name, title, details)
 	 	VALUES ($1, $2, $3) RETURNING id`
-
-	detailsNull := sql.NullString{}
-
-	logger.Log().Infof("detailsNull value: %v", detailsNull.String)
-	logger.Log().Infof("detailsNull valid: %v", detailsNull.Valid)
-
-	if n.Details == "" {
-		detailsNull.Valid = false
-	} else {
-		detailsNull.String = n.Details
-	}
-
-	logger.Log().Infof("detailsNull value: %v", detailsNull.String)
-	logger.Log().Infof("detailsNull valid: %v", detailsNull.Valid)
 
 	// A time ago... i used to open the database here, but at least on this
 	// particular project we open it on the main file so it is not necessary
@@ -73,7 +52,11 @@ func NotesCreate(w http.ResponseWriter, r *http.Request) {
 	// 5° Execute the query and assign the returned id to the Note object
 	// We will use QueryRow because the exec method returns two methods that are
 	// not compatible with psql!
-	err = stmt.QueryRow(n.OwnerName, n.Title, detailsNull.String).Scan(&n.ID)
+	err = stmt.QueryRow(
+		n.OwnerName,
+		n.Title,
+		stringToNull(n.Details), // Send a nill if it's null
+	).Scan(&n.ID)
 	if err != nil {
 		logger.Log().Infof("Error executing query: %v", err)
 		tx.Rollback()
@@ -91,6 +74,17 @@ func NotesCreate(w http.ResponseWriter, r *http.Request) {
 	// 8° Send the response
 	handler.SendResponse(w, http.StatusCreated, json)
 
+}
+
+// This function manages the null string values
+func stringToNull(s string) sql.NullString {
+	null := sql.NullString{String: s}
+
+	if null.String != "" {
+		null.Valid = true
+	}
+
+	return null
 }
 
 // func (db *Database) NotesGetAll() ([]models.Note, error) {
