@@ -40,7 +40,7 @@ func NewPostgresClient() *PostgreClient {
 	// That's why we MUST check with Ping() method if it's working!
 	db, err := sql.Open("postgres", dsn)
 	// Close DB after program exits
-	defer db.Close()
+	// defer db.Close()
 
 	if err != nil {
 		// If we can not connect to the database, log the error and close the app with panic
