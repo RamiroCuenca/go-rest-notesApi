@@ -1,3 +1,4 @@
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/ramiro/go/src/github.com/RamiroCuenca/07-rest-notes'
 docker run --name notesApp -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgres
 make: Leaving directory '/home/ramiro/go/src/github.com/RamiroCuenca/07-rest-notes'
