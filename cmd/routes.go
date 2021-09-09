@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/RamiroCuenca/go-rest-notesApi/notes/handlers"
+	"github.com/RamiroCuenca/go-rest-notesApi/notes/controllers"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 )
@@ -14,7 +14,7 @@ func Routes() *chi.Mux {
 	r.Use(middleware.Logger)
 
 	// Handlers
-	r.Post("/api/v1/notes/create", handlers.NotesCreate)
+	r.Post("/api/v1/notes/create", controllers.NotesCreate)
 	r.Get("/api/v1/notes/readbyid/{id}", nil)
 	r.Get("/api/v1/notes/readall", nil)
 	r.Put("/api/v1/notes/update", nil)
