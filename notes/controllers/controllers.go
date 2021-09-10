@@ -323,6 +323,58 @@ func NotesGetById(w http.ResponseWriter, r *http.Request) {
 	handler.SendResponse(w, http.StatusOK, json)
 }
 
+// This handler deletes a Note by its id
+func NotesDeleteById(w http.ResponseWriter, r *http.Request) {
+	// 1° Get the id from request url
+	urlParam := r.URL.Query().Get("id")
+	id, err := strconv.Atoi(urlParam)
+	if err != nil {
+		logger.Log().Infof("Error obtaining id from request: %v", err)
+		handler.SendError(w, http.StatusBadRequest)
+		return
+	}
+
+	// 2° Create the sql query
+	q := `DELETE FROM notes WHERE id = $1`
+
+	// 3° Init the db connection and start a transaction
+	db := connection.NewPostgresClient()
+
+	tx, err := db.Begin()
+	if err != nil {
+		logger.Log().Infof("Error starting transaction: %v", err)
+		handler.SendError(w, 500) // Internal Server Error
+		return
+	}
+
+	// 4° Prepare the transaction
+	stmt, err := tx.Prepare(q)
+	if err != nil {
+		logger.Log().Infof("Error preparing transaction: %v", err)
+		handler.SendError(w, 500) // Internal Server Error
+		return
+	}
+
+	// 5° Execute the transaction
+	_, err = stmt.Exec(id)
+	if err != nil {
+		logger.Log().Infof("Error executing query: %v", err)
+		handler.SendError(w, 500) // Internal Server Error
+		return
+	}
+
+	// 6° Commit the transaction
+	tx.Commit()
+	logger.Log().Info("Record deleted successfully! :)")
+
+	// 7° Send response
+	json := []byte(`{
+		"message": "Record deleted successfully!"
+	}`)
+
+	handler.SendResponse(w, http.StatusOK, json)
+}
+
 // This function manages the null string values
 func stringToNull(s string) sql.NullString {
 	null := sql.NullString{String: s}
