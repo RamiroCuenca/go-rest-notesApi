@@ -206,9 +206,6 @@ func NotesUpdateById(w http.ResponseWriter, r *http.Request) {
 		details = $3, updated_at = now() 
 		WHERE id = $4 RETURNING created_at, updated_at;`
 
-	// q := `UPDATE notes SET owner_name = $1, title = $2,
-	// details = $3, updated_at = now()
-	// WHERE id = $4 RETURNING id, created_at, updated_at;`
 	// 4° Init a connection to the database and start a transaction
 	db := connection.NewPostgresClient()
 
@@ -255,6 +252,74 @@ func NotesUpdateById(w http.ResponseWriter, r *http.Request) {
 	json, _ := json.Marshal(n)
 
 	// 9° Send the response
+	handler.SendResponse(w, http.StatusOK, json)
+}
+
+// This handler fetch a Note by its id
+func NotesGetById(w http.ResponseWriter, r *http.Request) {
+	// 1° Get the id from request url
+	urlParam := r.URL.Query().Get("id")
+	id, err := strconv.Atoi(urlParam) // Convert it to int
+	if err != nil {
+		logger.Log().Infof("Error obtaining id from request: %v", err)
+		handler.SendError(w, http.StatusBadRequest)
+		return
+	}
+
+	// 2° Create a note object where the fetched note will be stored
+	n := models.Note{ID: uint(id)}
+	// We should be prepare to receive a Null value from Details & UpdatedAt
+	nullDetails := sql.NullString{}
+	nullUpdateAt := pq.NullTime{}
+
+	// 3° Create the sql query
+	q := `SELECT * FROM notes WHERE id = $1;`
+
+	// 4° Init the connection with the database and start a transaction
+	db := connection.NewPostgresClient()
+
+	tx, err := db.Begin()
+	if err != nil {
+		logger.Log().Infof("Error starting transaction: %v", err)
+		handler.SendError(w, 500) // Internal Server Error
+		return
+	}
+
+	// 5° Prepare the transaction
+	stmt, err := tx.Prepare(q)
+	if err != nil {
+		logger.Log().Infof("Error preparing transaction: %v", err)
+		handler.SendError(w, 500) // Internal Server Error
+		return
+	}
+	defer stmt.Close()
+
+	// 6° Execute the query and scan the row and assign the values to the note
+	err = stmt.QueryRow(n.ID).Scan(
+		&n.ID,
+		&n.OwnerName,
+		&n.Title,
+		&nullDetails, // In case it's null
+		&n.CreatedAt,
+		&nullUpdateAt, // In case it's null
+	)
+	if err != nil {
+		logger.Log().Infof("Error scanning the row: %v", err)
+		handler.SendError(w, 500) // Internal Server Error
+		return
+	}
+
+	n.Details = nullDetails.String
+	n.UpdatedAt = nullUpdateAt.Time
+
+	// 8° Encode the Note as Json using Marshal
+	json, _ := json.Marshal(n)
+
+	// 7° Commit the transaction
+	logger.Log().Info("Record fetched successfully! :)")
+	tx.Commit()
+
+	// 9° Send response
 	handler.SendResponse(w, http.StatusOK, json)
 }
 
