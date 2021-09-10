@@ -3,7 +3,9 @@ package controllers
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/RamiroCuenca/go-rest-notesApi/common/handler"
 	"github.com/RamiroCuenca/go-rest-notesApi/common/logger"
@@ -163,6 +165,96 @@ func NotesGetAll(w http.ResponseWriter, r *http.Request) {
 	// w.WriteHeader(http.StatusOK)
 
 	// 8° Send the response
+	handler.SendResponse(w, http.StatusOK, json)
+}
+
+// This handler fetch a Note by its ID
+// The id from the note that will be updated must be sent on the url as a parameter.
+// And in the body of the request there must be the:
+//
+// - owner_name
+//
+// - title
+//
+// - details
+func NotesUpdateById(w http.ResponseWriter, r *http.Request) {
+	// 1° Get the id from the url
+	urlParam := r.URL.Query().Get("id") // Returns a string
+	id, err := strconv.Atoi(urlParam)   // Convert it to int
+	if err != nil {
+		logger.Log().Infof("Error obtaining id from request: %v", err)
+		handler.SendError(w, http.StatusBadRequest)
+		return
+	}
+
+	// 2° Decode the json sent on the body on a Note object
+	n := models.Note{}
+	n.ID = uint(id)
+	err = json.NewDecoder(r.Body).Decode(&n)
+	if err != nil {
+		logger.Log().Infof("Error decoding the note from request body: %v", err)
+		handler.SendError(w, http.StatusBadRequest)
+		return
+	}
+
+	fmt.Println(n)
+
+	// 3° Prepare the query.
+	// Remember to add update_at
+	q := `UPDATE notes SET 
+		owner_name = $1, title = $2, 
+		details = $3, updated_at = now() 
+		WHERE id = $4 RETURNING created_at, updated_at;`
+
+	// q := `UPDATE notes SET owner_name = $1, title = $2,
+	// details = $3, updated_at = now()
+	// WHERE id = $4 RETURNING id, created_at, updated_at;`
+	// 4° Init a connection to the database and start a transaction
+	db := connection.NewPostgresClient()
+
+	tx, err := db.Begin()
+	if err != nil {
+		logger.Log().Infof("Error starting transaction: %v", err)
+		handler.SendError(w, 500) // Internal Server Error
+		return
+	}
+
+	// 5° Prepare the transaction
+	stmt, err := tx.Prepare(q)
+	if err != nil {
+		logger.Log().Infof("Error preparing transaction: %v", err)
+		tx.Rollback()
+		handler.SendError(w, 500) // Internal Server Error
+		return
+	}
+	defer stmt.Close()
+
+	// 6° Execute the query
+	err = stmt.QueryRow(
+		n.OwnerName,
+		n.Title,
+		stringToNull(n.Details),
+		n.ID, // Obtained from url
+	).Scan(
+		&n.CreatedAt,
+		&n.UpdatedAt,
+	) // Scan the row and assign the values
+
+	if err != nil {
+		logger.Log().Infof("Error scannning the row: %v", err)
+		tx.Rollback()
+		handler.SendError(w, 500) // Internal Server Error
+		return
+	}
+
+	// 7° As there are no errors, commit the transaction
+	tx.Commit()
+	logger.Log().Infof("Note updated successfully! :)")
+
+	// 8° Encode the Note into a JSON object
+	json, _ := json.Marshal(n)
+
+	// 9° Send the response
 	handler.SendResponse(w, http.StatusOK, json)
 }
 
