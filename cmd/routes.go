@@ -18,7 +18,7 @@ func Routes() *chi.Mux {
 	r.Get("/api/v1/notes/readbyid", controllers.NotesGetById)
 	r.Get("/api/v1/notes/readall", controllers.NotesGetAll)
 	r.Put("/api/v1/notes/update", controllers.NotesUpdateById)
-	r.Delete("/api/v1/notes/delete/{id}", nil)
+	r.Delete("/api/v1/notes/delete", controllers.NotesDeleteById)
 
 	return r
 }
