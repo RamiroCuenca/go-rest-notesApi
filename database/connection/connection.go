@@ -3,6 +3,7 @@ package connection
 import (
 	"database/sql"
 	"fmt"
+	"sync"
 
 	"github.com/RamiroCuenca/go-rest-notesApi/common/logger"
 	_ "github.com/lib/pq" // Dont forget to import it, it provides the drivers for postgres
@@ -21,16 +22,20 @@ const (
 	dbname   = "notes-app-db"
 )
 
+var once sync.Once
+
 // Starts the connection to our postgres database
 func NewPostgresClient() *PostgreClient {
 
-	// Log db credentials
-	fmt.Println("Psql is using the following config:")
-	fmt.Printf("host: %15s\n", host)
-	fmt.Printf("port: %15s\n", port)
-	fmt.Printf("user: %15s\n", user)
-	fmt.Printf("password: %11s\n", password)
-	fmt.Printf("database: %11s\n", dbname)
+	once.Do(func() {
+		// Log db credentials
+		fmt.Println("Psql is using the following config:")
+		fmt.Printf("host: %15s\n", host)
+		fmt.Printf("port: %15s\n", port)
+		fmt.Printf("user: %15s\n", user)
+		fmt.Printf("password: %11s\n", password)
+		fmt.Printf("database: %11s\n", dbname)
+	})
 
 	// dsn = data source name
 	// The idea is that the parameters are variable according to the environment
@@ -56,8 +61,10 @@ func NewPostgresClient() *PostgreClient {
 		panic(err)
 	}
 
-	// fmt.Printf("\nConnected to %s succesfully!\n", dbname)
-	logger.Log().Infof("Connected to %s succesfully!", dbname)
+	once.Do(func() {
+		// fmt.Printf("\nConnected to %s succesfully!\n", dbname)
+		logger.Log().Infof("Connected to %s succesfully!", dbname)
+	})
 
 	// As there are no errors, return the database connection
 	return &PostgreClient{db}
