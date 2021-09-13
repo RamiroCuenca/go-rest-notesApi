@@ -24,7 +24,7 @@ WORKDIR /app
 # We use the same COPY command but we add "from" flag to 
 # tell docker where to copy the file from
 # The second dot represents the workdir
-COPY --from=builder /app/main/ .
+COPY --from=builder /app/main .
 
 # It is a good practice to add an EXPOSE instruction in order to 
 # inform docker that the container listens on the specified network port
