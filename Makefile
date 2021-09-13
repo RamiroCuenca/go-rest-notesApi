@@ -1,3 +1,7 @@
+# This rule compiles the project
+golang-build:
+	go build -o ./build/ ./...
+
 # This rule creates the container with docker using the postgres image
 docker-container-create:
 	docker run --name notesApp -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgres
