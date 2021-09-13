@@ -13,7 +13,7 @@ COPY . .
 
 # Next, wi want to build our app to a single binary executable file
 # The -o means output
-RUN go build -o main ./...
+RUN go build -o main/ ./...
 
 # RUN STAGE
 FROM alpine:3.14
