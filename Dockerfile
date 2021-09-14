@@ -32,7 +32,7 @@ EXPOSE 8080
 
 # Define the default command that will be executed when the container starts
 # It's an array of CMD arguments
-CMD "./app/build/cmd"
+CMD "./app/cmd"
 # ./app/build
 
 # docker build -t notes-app:latest . 
