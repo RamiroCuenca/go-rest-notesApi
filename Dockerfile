@@ -28,7 +28,7 @@ COPY --from=builder /app/build .
 
 # It is a good practice to add an EXPOSE instruction in order to 
 # inform docker that the container listens on the specified network port
-EXPOSE 8080
+EXPOSE 8000
 
 # Define the default command that will be executed when the container starts
 # It's an array of CMD arguments
