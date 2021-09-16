@@ -17,10 +17,10 @@ docker-container-stop:
 # This rule creates the db on the container
 docker-postgres-createdb:
 	docker container exec -it backend-postgres-db createdb --username=postgres --owner=postgres go-notes-database
-	# docker container exec -it backend-postgres-db bash
-	# psql -U postgres
-	# \c go-notes-database
-	# GRANT SELECT, UPDATE, INSERT, DELETE ON invoiceheaders TO postgres;
+# docker container exec -it backend-postgres-db bash
+# psql -U postgres
+# \c go-notes-database
+# GRANT SELECT, UPDATE, INSERT, DELETE ON invoiceheaders TO postgres;
 # We must grant on all tables
 
 # This rule deletes the db on the container
