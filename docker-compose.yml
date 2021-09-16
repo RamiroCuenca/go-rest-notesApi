@@ -1,0 +1,24 @@
+# Version of docker-compose we are using
+version: "3"
+
+# Here we add the services
+services:
+  database:
+    image: postgres
+    restart: always # If the container fails to start it trys again
+    environment:
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432 # Ports exposed
+      
+  backend:
+    build: . # Where is the Dockerfile
+    image: backend-go-notes-app # Name of the image generated
+    ports:
+      - 8000:8000 # Ports exposed
+    # environment: 
+      # Any env vars
+
+
+# docker-compose up -d --build
