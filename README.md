@@ -16,7 +16,7 @@ This was my first ever CRUD done with Golang. It was a challenge cause i hadn't 
 | :-------- | :------- | :------------------------- |
 | `owner_name` | `string` | **Required** |
 | `title` | `string` | **Required** |
-| `details` | `string` |  Your API key |
+| `details` | `string` |  Optional |
 
 #### Get all notes
 
