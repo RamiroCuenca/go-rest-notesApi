@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Sep 15 10:31:44 2021
+# Make data base, printed on Mon Oct 11 09:41:29 2021
 
 # Variables
 
@@ -16,6 +16,8 @@ make: *** No rule to make target 'all'.  Stop.
 GDK_BACKEND = x11
 # environment
 LC_ALL = C
+# environment
+NO_AT_BRIDGE = 1
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
@@ -25,7 +27,7 @@ SNAP_INSTANCE_KEY =
 # environment
 GJS_DEBUG_OUTPUT = stderr
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-97116fee-2bf0-46aa-960c-fae5d9e465b9.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-1bd85d48-18cf-42b2-a61f-5216ce69834f.sock
 # environment
 MANDATORY_PATH = /usr/share/gconf/ubuntu.mandatory.path
 # environment
@@ -33,7 +35,7 @@ LC_NAME = es_AR.UTF-8
 # environment
 LC_NUMERIC = es_AR.UTF-8
 # environment
-VSCODE_CWD = /home/ramiro
+VSCODE_CWD = /home/ramiro/go/src/github.com/RamiroCuenca/07-rest-notes
 # environment
 WINDOWPATH = 2
 # environment
@@ -44,12 +46,14 @@ LC_ADDRESS = es_AR.UTF-8
 MAKE_COMMAND := make
 # environment
 QT_ACCESSIBILITY = 1
+# environment
+GOPATH = /home/ramiro/go
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
 # environment
 SNAP_INSTANCE_NAME = code
 # environment
-GDK_PIXBUF_MODULEDIR = /snap/code/74/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
+GDK_PIXBUF_MODULEDIR = /snap/code/76/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -71,9 +75,9 @@ VSCODE_LOG_STACK = false
 # automatic
 %F = $(notdir $%)
 # environment
-NVM_INC = /home/ramiro/.nvm/versions/node/v14.15.5/include/node
+NVM_INC = /home/ramiro/.nvm/versions/node/v16.10.0/include/node
 # environment
-VSCODE_CODE_CACHE_PATH = /home/ramiro/.config/Code/CachedData/83bd43bc519d15e50c4272c6cf5c1479df196a4d
+VSCODE_CODE_CACHE_PATH = /home/ramiro/.config/Code/CachedData/ee8c7def80afc00dd6e593ef12f37756d8f504ea
 # environment
 LANG = C
 # environment
@@ -82,6 +86,8 @@ XAUTHORITY = /run/user/1000/gdm/Xauthority
 .LOADED := 
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
+# environment
+GNOME_TERMINAL_SERVICE = :1.225
 # makefile
 MAKEFLAGS = pqrR
 # makefile
@@ -99,7 +105,7 @@ SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # default
 .SHELLFLAGS := -c
 # environment
-NVM_BIN = /home/ramiro/.nvm/versions/node/v14.15.5/bin
+NVM_BIN = /home/ramiro/.nvm/versions/node/v16.10.0/bin
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # automatic
@@ -119,7 +125,7 @@ ZSH = /home/ramiro/.oh-my-zsh
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 5681
+VSCODE_PID = 6139
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
@@ -127,7 +133,7 @@ XDG_SESSION_TYPE = x11
 # environment
 BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
 # environment
-SESSION_MANAGER = local/cuenca:@/tmp/.ICE-unix/2101,unix/cuenca:/tmp/.ICE-unix/2101
+SESSION_MANAGER = local/cuenca:@/tmp/.ICE-unix/2163,unix/cuenca:/tmp/.ICE-unix/2163
 # automatic
 *F = $(notdir $*)
 # environment
@@ -153,7 +159,9 @@ XMODIFIERS = @im=ibus
 # environment
 GJS_DEBUG_TOPICS = JS ERROR;JS LOG
 # environment
-SHLVL = 0
+SHLVL = 1
+# environment
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/c16bd87d_b8ac_4d69_9db7_24d79dcf9054
 # environment
 MAKELEVEL := 0
 # default
@@ -161,7 +169,7 @@ MAKE = $(MAKE_COMMAND)
 # environment
 SNAP_COOKIE = IV4f0SYky4hd0EGDJUmL_N-dHNcxqTBajMOpPT9Is7e8bxAnpRKu
 # environment
-PATH = /home/ramiro/.nvm/versions/node/v14.15.5/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/usr/local/go/bin
+PATH = /home/ramiro/.nvm/versions/node/v16.10.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/usr/local/go/bin
 # default
 MAKEFILES := 
 # environment
@@ -173,11 +181,11 @@ SNAP_USER_COMMON = /home/ramiro/snap/code/common
 # environment
 LC_TIME = es_AR.UTF-8
 # environment
-SNAP = /snap/code/74
+SNAP = /snap/code/76
 # environment
-INVOCATION_ID = 071bc07028fd4aa4a05fce4c66d2feea
+INVOCATION_ID = dd4a3ed494d9406ea93a5ddd162a1ed8
 # environment
-SNAP_REVISION = 74
+SNAP_REVISION = 76
 # environment
 SNAP_REAL_HOME = /home/ramiro
 # environment
@@ -191,7 +199,7 @@ LC_TELEPHONE = es_AR.UTF-8
 # environment
 XDG_CURRENT_DESKTOP = Unity
 # environment
-LS_COLORS = 
+LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
 # automatic
 +F = $(notdir $+)
 # environment
@@ -223,19 +231,17 @@ MAKE_VERSION := 4.3
 # environment
 DISABLE_WAYLAND = 1
 # environment
-SNAP_DATA = /var/snap/code/74
+SNAP_DATA = /var/snap/code/76
 # environment
 SNAP_CONTEXT = IV4f0SYky4hd0EGDJUmL_N-dHNcxqTBajMOpPT9Is7e8bxAnpRKu
 # environment
-MANAGERPID = 1831
+MANAGERPID = 1891
 # environment
 LC_MEASUREMENT = es_AR.UTF-8
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 5634
+GIO_LAUNCHED_DESKTOP_FILE_PID = 6093
 # environment
 PAGER = less
-# environment
-_ = /snap/code/74/usr/share/code/code
 # environment
 LC_PAPER = es_AR.UTF-8
 # environment
@@ -243,11 +249,15 @@ XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
+COLORTERM = truecolor
+# environment
 GDK_PIXBUF_MODULE_FILE = /home/ramiro/snap/code/common/.cache/gdk-pixbuf-loaders.cache
 # environment
 NVM_CD_FLAGS = -q
 # environment
-JOURNAL_STREAM = 8:40040
+JOURNAL_STREAM = 8:31717
+# environment
+GOMODCACHE = /home/ramiro/go/pkg/mod
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -259,19 +269,24 @@ QT_IM_MODULE = ibus
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-32cef71a-1.60.1-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-32cef71a-1.61.0-main.sock
+# environment
+TERM = xterm-256color
 # environment
 SNAP_NAME = code
 # environment
-GSETTINGS_SCHEMA_DIR = /snap/code/74/usr/share/glib-2.0/schemas
+GSETTINGS_SCHEMA_DIR = /snap/code/76/usr/share/glib-2.0/schemas
 # environment
+ 
 IM_CONFIG_PHASE = 1
+# environment
+GOPROXY = https://proxy.golang.org,direct
 # default
 .RECIPEPREFIX := 
 # automatic
 <F = $(notdir $<)
 # environment
-SNAP_VERSION = 83bd43bc
+SNAP_VERSION = ee8c7def
 # default
 SUFFIXES := 
 # environment
@@ -279,22 +294,23 @@ VSCODE_CLI = 1
 # environment
 ELECTRON_NO_ATTACH_CONSOLE = 1
 # environment
+VTE_VERSION = 6203
+# environment
 SNAP_COMMON = /var/snap/code/common
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
 # environment
-SNAP_USER_DATA = /home/ramiro/snap/code/74
+SNAP_USER_DATA = /home/ramiro/snap/code/76
 # environment
 XDG_MENU_PREFIX = gnome-
 # environment
- 
 GDMSESSION = ubuntu
 # environment
 LC_IDENTIFICATION = es_AR.UTF-8
 # environment
 SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd/void
 # variable set hash-table stats:
-# Load=140/1024=14%, Rehash=0, Collisions=7/170=4%
+# Load=148/1024=14%, Rehash=0, Collisions=15/178=8%
 
 # Pattern-specific Variable Values
 
@@ -302,9 +318,9 @@ SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd
 
 # Directories
 
-# . (device 66306, inode 29377206): 14 files, no impossibilities.
+# . (device 66306, inode 29377206): 17 files, no impossibilities.
 
-# 14 files, no impossibilities in 1 directories.
+# 17 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -315,7 +331,7 @@ SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-10 13:46:21.659330741
+#  Last modified 2021-09-16 19:28:18.246184744
 #  File has been updated.
 #  Successfully updated.
 
@@ -325,11 +341,7 @@ docker-postgres-createdb:
 #  File does not exist.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 19):
-	docker container exec -it notesApp createdb --username=postgres --owner=postgres notes-app-db
-	# docker container exec -it notesApp bash
-	# psql -U postgres
-	# \c notes-app-db
-	# GRANT SELECT, UPDATE, INSERT, DELETE ON invoiceheaders TO postgres;
+	docker container exec -it backend-postgres-db createdb --username=postgres --owner=postgres go-notes-database
 
 docker-container-create:
 #  Phony target (prerequisite of .PHONY).
@@ -337,7 +349,7 @@ docker-container-create:
 #  File does not exist.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 7):
-	docker run --name notesApp -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgres
+	docker run --name backend-postgres-db -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgres
 
 docker-container-stop:
 #  Phony target (prerequisite of .PHONY).
@@ -345,7 +357,7 @@ docker-container-stop:
 #  File does not exist.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 15):
-	docker container stop notesApp
+	docker container stop backend-postgres-db
 
 golang-build:
 #  Implicit rule search has not been done.
@@ -360,7 +372,7 @@ run-migrations-up:
 #  File does not exist.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 32):
-	migrate --path database/migrations --database "postgresql://postgres:postgres@localhost:5432/notes-app-db?sslmode=disable" --verbose up
+	migrate --path database/migrations --database "postgresql://postgres:postgres@localhost:5432/go-notes-database?sslmode=disable" --verbose up
 
 run-migrations-down:
 #  Phony target (prerequisite of .PHONY).
@@ -368,7 +380,7 @@ run-migrations-down:
 #  File does not exist.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 35):
-	migrate --path database/migrations --database "postgresql://postgres:postgres@localhost:5432/notes-app-db?sslmode=disable" --verbose down
+	migrate --path database/migrations --database "postgresql://postgres:postgres@localhost:5432/go-notes-database?sslmode=disable" --verbose down
 
 # Not a target:
 .DEFAULT:
@@ -389,7 +401,7 @@ docker-container-start:
 #  File does not exist.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 11):
-	docker container start notesApp
+	docker container start backend-postgres-db
 
 .PHONY: docker-container-create docker-container-start docker-container-stop docker-postgres-createdb docker-postgres-dropdb run-migrations-up run-migrations-down
 #  Implicit rule search has not been done.
@@ -402,7 +414,7 @@ docker-postgres-dropdb:
 #  File does not exist.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 28):
-	docker exec -it notesApp dropdb notes-app-db
+	docker exec -it backend-postgres-db dropdb go-notes-database
 
 # files hash-table stats:
 # Load=13/1024=1%, Rehash=0, Collisions=0/30=0%
@@ -412,12 +424,12 @@ docker-postgres-dropdb:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 28 / storage = 329 B / avg = 11 B
-# current buf: size = 8162 B / used = 329 B / count = 28 / avg = 11 B
+# strcache buffers: 1 (0) / strings = 31 / storage = 367 B / avg = 11 B
+# current buf: size = 8162 B / used = 367 B / count = 31 / avg = 11 B
 
-# strcache performance: lookups = 48 / hit rate = 41%
+# strcache performance: lookups = 51 / hit rate = 39%
 # hash-table stats:
-# Load=28/8192=0%, Rehash=0, Collisions=0/48=0%
-# Finished Make data base on Wed Sep 15 10:31:44 2021
+# Load=31/8192=0%, Rehash=0, Collisions=0/51=0%
+# Finished Make data base on Mon Oct 11 09:41:29 2021
 
  
