@@ -57,6 +57,16 @@ This was my first ever CRUD done with Golang. It was a challenge cause i hadn't 
 | :-------- | :------- | :------------------------- |
 | `id` | `int` | **Required** |
 
+## Tech Stack
+
+**Language:** Go
+
+**Packages:** Chi, Zap and lib/pq
+
+**Database:** PostgreSQL
+
+**Others:** Docker
+
 ## Author
 
 - [@ramirocuencasalinas](https://www.linkedin.com/in/ramiro-cuenca-salinas/)
